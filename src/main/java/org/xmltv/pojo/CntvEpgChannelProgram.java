@@ -1,9 +1,9 @@
 package org.xmltv.pojo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
+import org.xmltv.jackson.UnixTimestampDeserializer;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -11,11 +11,11 @@ public class CntvEpgChannelProgram {
 
     String t;
 
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
-    LocalDate st;
+    @JsonDeserialize(using = UnixTimestampDeserializer.class)
+    Date st;
 
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
-    LocalDate et;
+    @JsonDeserialize(using = UnixTimestampDeserializer.class)
+    Date et;
 
     String showTime;
 

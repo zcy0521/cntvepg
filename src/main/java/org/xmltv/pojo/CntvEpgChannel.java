@@ -1,9 +1,9 @@
 package org.xmltv.pojo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
+import org.xmltv.jackson.UnixTimestampDeserializer;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -12,8 +12,8 @@ public class CntvEpgChannel {
 
     String isLive;
 
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
-    LocalDate liveSt;
+    @JsonDeserialize(using = UnixTimestampDeserializer.class)
+    Date liveSt;
 
     String channelId;
 

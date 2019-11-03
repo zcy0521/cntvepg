@@ -14,8 +14,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.xmltv.pojo.CntvEpgChannel;
 import org.xmltv.pojo.CntvXmltv;
 
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 
 /**
  * CNTV EPG 服务测试
@@ -58,12 +60,18 @@ public class CntvEpgServiceTest {
     }
 
     @Test
-    public void testDate() {
-        Long dateValue = 1572538740L;
-        DateTimeZone dateTimeZone = DateTimeZone.UTC;
-        DateTime dateTime = new DateTime(dateValue, dateTimeZone);
-        String dateStr = dateTime.toString("yyyy-MM-dd HH:mm:ss");
-        System.out.println(dateStr);
+    public void testZoneIds() {
+        Set<String> zoneIds = ZoneId.getAvailableZoneIds();
+        for (String zoneId : zoneIds) {
+            System.out.println(zoneId);
+        }
+    }
+
+    @Test
+    public void testGMT8ZoneId() {
+        for (String string : TimeZone.getAvailableIDs(TimeZone.getTimeZone("GMT+08:00").getRawOffset())) {
+            System.out.println(string);
+        }
     }
 
 }

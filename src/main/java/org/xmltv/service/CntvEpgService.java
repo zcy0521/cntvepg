@@ -1,9 +1,7 @@
 package org.xmltv.service;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -27,7 +25,6 @@ import org.xmltv.pojo.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 
@@ -45,8 +42,6 @@ public class CntvEpgService {
     private static final String CNTV_EPG_API_PATH = "/epg/epginfo";
 
     private static final Integer SEARCH_DATE_DEFAULT_OFFSET = 7;
-
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     /**
      * 获取代查询的频道名称列表
@@ -109,22 +104,17 @@ public class CntvEpgService {
     }
 
     /**
-     * 查询CNTV EPG接口信息
+     * 获取 CNTV EPG 接口返回
      * @param channelIdSet 查询频道集合
      * @param offset 查询日期偏移量
-     * @return apiJson
+     * @return json
      */
-    public List<CntvEpgChannel> getCntvEpgInfo(Set<String> channelIdSet, Integer offset) {
+    List<CntvEpgChannel> getCntvEpgInfo(Set<String> channelIdSet, Integer offset) {
         // 查询频道
-        if (CollectionUtils.isEmpty(channelIdSet)) {
-            channelIdSet = getCntvChannelSet();
-        }
         String channelValue = Joiner.on(",").skipNulls().join(channelIdSet);
 
         // 查询日期
-        if (null == offset || offset < 1) {
-            offset = SEARCH_DATE_DEFAULT_OFFSET;
-        }
+        offset = null == offset ? SEARCH_DATE_DEFAULT_OFFSET : offset;
 
         // 请求 cntv 接口
         ObjectMapper mapper = new ObjectMapper();
@@ -155,22 +145,25 @@ public class CntvEpgService {
         return channelList;
     }
 
-    public CntvXmltv getCntvXmltv(Set<String> channelIdSet, Integer offset) {
+    public List<CntvEpgChannel> getCntvEpgInfo() {
+        return this.getCntvEpgInfo(getCntvChannelSet(), SEARCH_DATE_DEFAULT_OFFSET);
+    }
+
+    /**
+     * 获取 xmltv
+     * @param channelIdSet 查询频道集合
+     * @param offset 查询日期偏移量
+     * @return xml
+     */
+    CntvXmltv getCntvXmltv(Set<String> channelIdSet, Integer offset) {
         // 查询频道
-        if (CollectionUtils.isEmpty(channelIdSet)) {
-            channelIdSet = getCntvChannelSet();
-        }
         String channelValue = Joiner.on(",").skipNulls().join(channelIdSet);
 
         // 查询日期
-        if (null == offset || offset < 1) {
-            offset = SEARCH_DATE_DEFAULT_OFFSET;
-        }
+        offset = null == offset ? SEARCH_DATE_DEFAULT_OFFSET : offset;
 
         // 请求 cntv 接口
         ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.enable(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS);
         CntvXmltv xmltv = new CntvXmltv();
         List<CntvXmltvChannel> channel = Lists.newArrayList();
         List<CntvXmltvProgramme> programme = Lists.newArrayList();
@@ -207,10 +200,8 @@ public class CntvEpgService {
                     }
                     for (CntvEpgChannelProgram epgChannelProgram : epgChannelProgramList) {
                         CntvXmltvProgramme xmltvProgramme = new CntvXmltvProgramme();
-                        String start = epgChannelProgram.getSt().format(FORMATTER) + " +0800";
-                        xmltvProgramme.setStart(start);
-                        String stop = epgChannelProgram.getEt().format(FORMATTER) + " +0800";
-                        xmltvProgramme.setStop(stop);
+                        xmltvProgramme.setStart(epgChannelProgram.getSt());
+                        xmltvProgramme.setStop(epgChannelProgram.getEt());
                         xmltvProgramme.setChannel(channelId);
                         CntvXmltvProgrammeTitle title = new CntvXmltvProgrammeTitle();
                         title.setLang("zh");
@@ -231,6 +222,10 @@ public class CntvEpgService {
         xmltv.setChannel(channel);
         xmltv.setProgramme(programme);
         return xmltv;
+    }
+
+    public CntvXmltv getCntvXmltv() {
+        return this.getCntvXmltv(getCntvChannelSet(), SEARCH_DATE_DEFAULT_OFFSET);
     }
 
 }

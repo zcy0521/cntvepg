@@ -1,6 +1,5 @@
 package org.xmltv.controller;
 
-import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -11,7 +10,6 @@ import org.xmltv.service.CntvEpgService;
 import org.xmltv.pojo.CntvXmltv;
 
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @RestController
@@ -27,8 +25,7 @@ public class EpgController {
      */
     @RequestMapping(path = "/cntv/epginfo", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<CntvEpgChannel> cntvEpgInfo() {
-        Set<String> channelIdSet = Sets.newHashSet("cctv1", "cctv2");
-        return cntvEpgService.getCntvEpgInfo(channelIdSet, null);
+        return cntvEpgService.getCntvEpgInfo();
     }
 
     /**
@@ -37,8 +34,7 @@ public class EpgController {
      */
     @RequestMapping(path = "/cntv/xmltv", produces = MediaType.APPLICATION_XML_VALUE)
     public CntvXmltv cntvXmltv() {
-        Set<String> channelIdSet = Sets.newHashSet("cctv1", "cctv2");
-        return cntvEpgService.getCntvXmltv(channelIdSet, null);
+        return cntvEpgService.getCntvXmltv();
     }
 
 }
