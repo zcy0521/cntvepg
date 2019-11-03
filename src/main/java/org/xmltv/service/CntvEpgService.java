@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
@@ -26,15 +25,11 @@ import org.xmltv.pojo.CntvEpgChannel;
 import org.xmltv.pojo.CntvEpgChannelProgram;
 import org.xmltv.pojo.*;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,7 +42,7 @@ import static org.springframework.util.ResourceUtils.CLASSPATH_URL_PREFIX;
 @Service
 public class CntvEpgService {
 
-    private static final String CNTV_M3U_FILE_NAME = "cntv.m3u";
+    private static final String CNTV_M3U_FILE_NAME = "public/cntv.m3u";
 
     private static final String CNTV_EPG_API_SCHEME = "http";
 
@@ -63,7 +58,7 @@ public class CntvEpgService {
     /**
      * 获取代查询的频道名称列表
      */
-    Set<String> getCntvChannelSet() {
+    List<String> getCntvChannelList() {
         // 解析 cntv.m3u 文件
         String text = "";
         try {
@@ -78,23 +73,23 @@ public class CntvEpgService {
         // 正则匹配
         Pattern pattern = Pattern.compile("tvg-id=\"(.*?)\"");
         Matcher matcher = pattern.matcher(text);
-        Set<String> channelSet = Sets.newHashSet();
+        List<String> channelList = Lists.newArrayList();
         while (matcher.find()) {
             // matcher.group(0) tvg-id="cctv"
             // matcher.group(1) cctv
             String channelName = matcher.group(1);
-            if (StringUtils.isNotBlank(channelName)) {
-                channelSet.add(channelName);
+            if (!channelList.contains(channelName) && StringUtils.isNotBlank(channelName)) {
+                channelList.add(channelName);
             }
         }
 
-        return channelSet;
+        return channelList;
     }
 
     /**
      * 查询 CNTV EPG 接口
      */
-    private static String searchEpgInfoFromApi(String channels, String date) {
+    private String searchEpgInfoFromApi(String channels, String date) {
         // 查询频道
         if (StringUtils.isEmpty(channels)) {
             return "";
@@ -146,13 +141,13 @@ public class CntvEpgService {
 
     /**
      * 获取 CNTV EPG 接口返回
-     * @param channelIdSet 查询频道集合
+     * @param channelIdList 查询频道集合
      * @param offset 查询日期偏移量
      * @return json
      */
-    List<CntvEpgChannel> getCntvEpgInfo(Set<String> channelIdSet, Integer offset) {
+    List<CntvEpgChannel> getCntvEpgInfo(List<String> channelIdList, Integer offset) {
         // 查询频道
-        String channelValue = Joiner.on(",").skipNulls().join(channelIdSet);
+        String channelValue = Joiner.on(",").skipNulls().join(channelIdList);
 
         // 查询日期
         offset = null == offset ? SEARCH_DATE_DEFAULT_OFFSET : offset;
@@ -171,7 +166,7 @@ public class CntvEpgService {
             // 解析json
             try {
                 JsonNode epgNode = mapper.readTree(egpInfo);
-                for (String channelId : channelIdSet) {
+                for (String channelId : channelIdList) {
                     JsonNode channelNode = epgNode.get(channelId);
                     CntvEpgChannel channel = mapper.treeToValue(channelNode, CntvEpgChannel.class);
                     channel.setChannelId(channelId);
@@ -187,18 +182,18 @@ public class CntvEpgService {
     }
 
     public List<CntvEpgChannel> getCntvEpgInfo() {
-        return getCntvEpgInfo(getCntvChannelSet(), SEARCH_DATE_DEFAULT_OFFSET);
+        return getCntvEpgInfo(getCntvChannelList(), SEARCH_DATE_DEFAULT_OFFSET);
     }
 
     /**
      * 获取 xmltv
-     * @param channelIdSet 查询频道集合
+     * @param channelIdList 查询频道集合
      * @param offset 查询日期偏移量
      * @return xml
      */
-    CntvXmltv getCntvXmltv(Set<String> channelIdSet, Integer offset) {
+    CntvXmltv getCntvXmltv(List<String> channelIdList, Integer offset) {
         // 查询频道
-        String channelValue = Joiner.on(",").skipNulls().join(channelIdSet);
+        String channelValue = Joiner.on(",").skipNulls().join(channelIdList);
 
         // 查询日期
         offset = null == offset ? SEARCH_DATE_DEFAULT_OFFSET : offset;
@@ -219,7 +214,7 @@ public class CntvEpgService {
             // 解析json
             try {
                 JsonNode epgNode = mapper.readTree(egpInfo);
-                for (String channelId : channelIdSet) {
+                for (String channelId : channelIdList) {
                     JsonNode channelNode = epgNode.get(channelId);
                     CntvEpgChannel epgChannel = mapper.treeToValue(channelNode, CntvEpgChannel.class);
 
@@ -266,7 +261,7 @@ public class CntvEpgService {
     }
 
     public CntvXmltv getCntvXmltv() {
-        return getCntvXmltv(getCntvChannelSet(), SEARCH_DATE_DEFAULT_OFFSET);
+        return getCntvXmltv(getCntvChannelList(), SEARCH_DATE_DEFAULT_OFFSET);
     }
 
 }

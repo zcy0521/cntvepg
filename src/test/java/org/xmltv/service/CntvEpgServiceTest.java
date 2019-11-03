@@ -3,11 +3,11 @@ package org.xmltv.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.google.common.collect.Sets;
+import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
+import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -39,17 +39,17 @@ public class CntvEpgServiceTest {
     private CntvEpgService cntvEpgService;
 
     @Test
-    public void testGetCntvChannelSet() {
-        Set<String> channelSet = cntvEpgService.getCntvChannelSet();
-        for (String channel : channelSet) {
+    public void testGetCntvChannelList() {
+        List<String> channelList = cntvEpgService.getCntvChannelList();
+        for (String channel : channelList) {
             System.out.println(channel);
         }
     }
 
     @Test
     public void testGetCntvEpgInfo() {
-        Set<String> channelIdSet = Sets.newHashSet("cctv1", "cctv2");
-        List<CntvEpgChannel> epgInfo = cntvEpgService.getCntvEpgInfo(channelIdSet, 2);
+        List<String> channelIdList = Lists.newArrayList("cctv1", "cctv2");
+        List<CntvEpgChannel> epgInfo = cntvEpgService.getCntvEpgInfo(channelIdList, 2);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = "";
@@ -63,10 +63,11 @@ public class CntvEpgServiceTest {
 
     @Test
     public void testGetCntvXmltv() {
-        Set<String> channelIdSet = Sets.newHashSet("cctv1", "cctv2");
-        CntvXmltv xmltv = cntvEpgService.getCntvXmltv(channelIdSet, 2);
+        List<String> channelIdList = Lists.newArrayList("cctv1", "cctv2");
+        CntvXmltv xmltv = cntvEpgService.getCntvXmltv(channelIdList, 2);
 
         XmlMapper mapper = new XmlMapper();
+        mapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
         String xml = "";
         try {
             xml = mapper.writeValueAsString(xmltv);
