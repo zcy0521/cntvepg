@@ -16,17 +16,29 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.FileCopyUtils;
 import org.xmltv.pojo.CntvEpgChannel;
 import org.xmltv.pojo.CntvEpgChannelProgram;
 import org.xmltv.pojo.*;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.springframework.util.ResourceUtils.CLASSPATH_URL_PREFIX;
 
 /**
  * CNTV EPG信息工具类
@@ -34,6 +46,8 @@ import java.util.Set;
 @Slf4j
 @Service
 public class CntvEpgService {
+
+    private static final String CNTV_M3U_FILE_NAME = "cntv.m3u";
 
     private static final String CNTV_EPG_API_SCHEME = "http";
 
@@ -43,11 +57,38 @@ public class CntvEpgService {
 
     private static final Integer SEARCH_DATE_DEFAULT_OFFSET = 7;
 
+    @Autowired
+    private ResourceLoader resourceLoader;
+
     /**
      * 获取代查询的频道名称列表
      */
-    private static Set<String> getCntvChannelSet() {
-        return Sets.newHashSet();
+    Set<String> getCntvChannelSet() {
+        // 解析 cntv.m3u 文件
+        String text = "";
+        try {
+            Resource cntvM3uResource = resourceLoader.getResource(CLASSPATH_URL_PREFIX + CNTV_M3U_FILE_NAME);
+            InputStream inputStream = cntvM3uResource.getInputStream();
+            Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+            text = FileCopyUtils.copyToString(reader);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 正则匹配
+        Pattern pattern = Pattern.compile("tvg-id=\"(.*?)\"");
+        Matcher matcher = pattern.matcher(text);
+        Set<String> channelSet = Sets.newHashSet();
+        while (matcher.find()) {
+            // matcher.group(0) tvg-id="cctv"
+            // matcher.group(1) cctv
+            String channelName = matcher.group(1);
+            if (StringUtils.isNotBlank(channelName)) {
+                channelSet.add(channelName);
+            }
+        }
+
+        return channelSet;
     }
 
     /**
@@ -146,7 +187,7 @@ public class CntvEpgService {
     }
 
     public List<CntvEpgChannel> getCntvEpgInfo() {
-        return this.getCntvEpgInfo(getCntvChannelSet(), SEARCH_DATE_DEFAULT_OFFSET);
+        return getCntvEpgInfo(getCntvChannelSet(), SEARCH_DATE_DEFAULT_OFFSET);
     }
 
     /**
@@ -225,7 +266,7 @@ public class CntvEpgService {
     }
 
     public CntvXmltv getCntvXmltv() {
-        return this.getCntvXmltv(getCntvChannelSet(), SEARCH_DATE_DEFAULT_OFFSET);
+        return getCntvXmltv(getCntvChannelSet(), SEARCH_DATE_DEFAULT_OFFSET);
     }
 
 }

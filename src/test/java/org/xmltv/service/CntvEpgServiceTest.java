@@ -4,20 +4,26 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.google.common.collect.Sets;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.FileCopyUtils;
 import org.xmltv.pojo.CntvEpgChannel;
 import org.xmltv.pojo.CntvXmltv;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * CNTV EPG 服务测试
@@ -27,7 +33,18 @@ import java.util.TimeZone;
 public class CntvEpgServiceTest {
 
     @Autowired
+    private ResourceLoader resourceLoader;
+
+    @Autowired
     private CntvEpgService cntvEpgService;
+
+    @Test
+    public void testGetCntvChannelSet() {
+        Set<String> channelSet = cntvEpgService.getCntvChannelSet();
+        for (String channel : channelSet) {
+            System.out.println(channel);
+        }
+    }
 
     @Test
     public void testGetCntvEpgInfo() {
@@ -57,6 +74,39 @@ public class CntvEpgServiceTest {
             e.printStackTrace();
         }
         System.out.println(xml);
+    }
+
+    @Test
+    public void testReadResource() {
+        try {
+            Resource cntvM3uResource = resourceLoader.getResource("classpath:cntv.m3u");
+            InputStream inputStream = cntvM3uResource.getInputStream();
+
+            // text
+            Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+            String text = FileCopyUtils.copyToString(reader);
+            System.out.println(text);
+
+            // bytes
+            byte[] bytes = FileCopyUtils.copyToByteArray(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testRegex() {
+        String text = "#EXTM3U\n" +
+                "#EXTINF:-1 tvg-id=\"cctv1\" tvg-name=\"CCTV-1\" tvg-chno=\"1\"\n" +
+                "rtsp://192.168.26.20/PLTV/88888914/224/3221225795/10000100000000060000000000000658_0.smil\n" +
+                "#EXTINF:-1 tvg-id=\"cctv2\" tvg-name=\"CCTV-2\" tvg-chno=\"2\"\n" +
+                "rtsp://192.168.26.20/PLTV/88888914/224/3221226140/10000100000000060000000000114913_0.smil";
+
+        Pattern pattern = Pattern.compile("tvg-id=\"(.*?)\"");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            System.out.println(matcher.group(1));
+        }
     }
 
     @Test
