@@ -281,63 +281,63 @@ rtsp://192.168.26.20/PLTV/88888914/224/3221226452/100001000000000600000000005982
 rtsp://192.168.26.20/PLTV/88888914/224/3221227403/126916575.smil
 #EXTINF:-1 tvg-id="" tvg-name="财富天下" tvg-chno="617"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225852/10000100000000060000000000000677_0.smil
-#EXTINF:-1 tvg-id="cctv1" tvg-name="CCTV-1（标清）" tvg-chno="651"
+#EXTINF:-1 tvg-id="" tvg-name="CCTV-1（标清）" tvg-chno="651"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225675/10000100000000060000000000000510_0.smil
-#EXTINF:-1 tvg-id="cctv2" tvg-name="CCTV-2标清" tvg-chno="652"
+#EXTINF:-1 tvg-id="" tvg-name="CCTV-2标清" tvg-chno="652"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226860/10000100000000060000000002229502_0.smil
-#EXTINF:-1 tvg-id="cctv4" tvg-name="CCTV-4标清" tvg-chno="653"
+#EXTINF:-1 tvg-id="" tvg-name="CCTV-4标清" tvg-chno="653"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226850/10000100000000060000000002229504_0.smil
-#EXTINF:-1 tvg-id="cctv7" tvg-name="CCTV-7标清" tvg-chno="654"
+#EXTINF:-1 tvg-id="" tvg-name="CCTV-7标清" tvg-chno="654"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226846/10000100000000060000000002229503_0.smil
-#EXTINF:-1 tvg-id="cctvjilu" tvg-name="CCTV-9标清" tvg-chno="655"
+#EXTINF:-1 tvg-id="" tvg-name="CCTV-9标清" tvg-chno="655"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225678/10000100000000060000000000000511_0.smil
-#EXTINF:-1 tvg-id="cctv10" tvg-name="CCTV-10标清" tvg-chno="656"
+#EXTINF:-1 tvg-id="" tvg-name="CCTV-10标清" tvg-chno="656"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225669/10000100000000060000000000000508_0.smil
-#EXTINF:-1 tvg-id="cctv12" tvg-name="CCTV-12标清" tvg-chno="657"
+#EXTINF:-1 tvg-id="" tvg-name="CCTV-12标清" tvg-chno="657"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225660/10000100000000060000000000000505_0.smil
-#EXTINF:-1 tvg-id="cctvchild" tvg-name="CCTV-14标清" tvg-chno="658"
+#EXTINF:-1 tvg-id="" tvg-name="CCTV-14标清" tvg-chno="658"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225666/10000100000000060000000000000507_0.smil
-#EXTINF:-1 tvg-id="hebei" tvg-name="河北卫视标清" tvg-chno="660"
+#EXTINF:-1 tvg-id="" tvg-name="河北卫视标清" tvg-chno="660"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225648/10000100000000060000000000000493_0.smil
 #EXTINF:-1 tvg-id="" tvg-name="石家庄新闻综合标清" tvg-chno="661"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226050/10000100000000060000000000001130_0.smil
-#EXTINF:-1 tvg-id="hunan" tvg-name="湖南卫视" tvg-chno="662"
+#EXTINF:-1 tvg-id="" tvg-name="湖南卫视" tvg-chno="662"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226014/10000100000000060000000000001118_0.smil
-#EXTINF:-1 tvg-id="zhejiang" tvg-name="浙江卫视标清" tvg-chno="663"
+#EXTINF:-1 tvg-id="" tvg-name="浙江卫视标清" tvg-chno="663"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226011/10000100000000060000000000001117_0.smil
-#EXTINF:-1 tvg-id="jiangsu" tvg-name="江苏卫视标清" tvg-chno="664"
+#EXTINF:-1 tvg-id="" tvg-name="江苏卫视标清" tvg-chno="664"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226020/10000100000000060000000000001120_0.smil
-#EXTINF:-1 tvg-id="btv1" tvg-name="北京卫视标清" tvg-chno="666"
+#EXTINF:-1 tvg-id="" tvg-name="北京卫视标清" tvg-chno="666"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226023/10000100000000060000000000001121_0.smil
-#EXTINF:-1 tvg-id="tianjin" tvg-name="天津卫视标清" tvg-chno="667"
+#EXTINF:-1 tvg-id="" tvg-name="天津卫视标清" tvg-chno="667"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225744/10000100000000060000000000000641_0.smil
-#EXTINF:-1 tvg-id="liaoning" tvg-name="辽宁卫视标清" tvg-chno="668"
+#EXTINF:-1 tvg-id="" tvg-name="辽宁卫视标清" tvg-chno="668"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226029/10000100000000060000000000001123_0.smil
-#EXTINF:-1 tvg-id="shandong" tvg-name="山东卫视标清" tvg-chno="669"
+#EXTINF:-1 tvg-id="" tvg-name="山东卫视标清" tvg-chno="669"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225753/10000100000000060000000000000644_0.smil
-#EXTINF:-1 tvg-id="henan" tvg-name="河南卫视标清" tvg-chno="670"
+#EXTINF:-1 tvg-id="" tvg-name="河南卫视标清" tvg-chno="670"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225786/10000100000000060000000000000655_0.smil
-#EXTINF:-1 tvg-id="heilongjiang" tvg-name="黑龙江卫视标清" tvg-chno="671"
+#EXTINF:-1 tvg-id="" tvg-name="黑龙江卫视标清" tvg-chno="671"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225765/10000100000000060000000000000648_0.smil
-#EXTINF:-1 tvg-id="sichuan" tvg-name="四川卫视标清" tvg-chno="672"
+#EXTINF:-1 tvg-id="" tvg-name="四川卫视标清" tvg-chno="672"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226032/10000100000000060000000000001124_0.smil
-#EXTINF:-1 tvg-id="jiangxi" tvg-name="江西卫视标清" tvg-chno="673"
+#EXTINF:-1 tvg-id="" tvg-name="江西卫视标清" tvg-chno="673"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226026/10000100000000060000000000001122_0.smil
-#EXTINF:-1 tvg-id="guizhou" tvg-name="贵州卫视标清" tvg-chno="674"
+#EXTINF:-1 tvg-id="" tvg-name="贵州卫视标清" tvg-chno="674"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225774/10000100000000060000000000000651_0.smil
-#EXTINF:-1 tvg-id="shenzhen" tvg-name="深圳卫视标清" tvg-chno="675"
+#EXTINF:-1 tvg-id="" tvg-name="深圳卫视标清" tvg-chno="675"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225720/10000100000000060000000000000633_0.smil
-#EXTINF:-1 tvg-id="hubei" tvg-name="湖北卫视标清" tvg-chno="676"
+#EXTINF:-1 tvg-id="" tvg-name="湖北卫视标清" tvg-chno="676"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225747/10000100000000060000000000000642_0.smil
-#EXTINF:-1 tvg-id="dongfang" tvg-name="东方卫视" tvg-chno="677"
+#EXTINF:-1 tvg-id="" tvg-name="东方卫视" tvg-chno="677"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226035/10000100000000060000000000001125_0.smil
-#EXTINF:-1 tvg-id="chongqing" tvg-name="重庆卫视标清" tvg-chno="678"
+#EXTINF:-1 tvg-id="" tvg-name="重庆卫视标清" tvg-chno="678"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225789/10000100000000060000000000000656_0.smil
-#EXTINF:-1 tvg-id="dongnan" tvg-name="东南卫视标清" tvg-chno="679"
+#EXTINF:-1 tvg-id="" tvg-name="东南卫视标清" tvg-chno="679"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225777/10000100000000060000000000000652_0.smil
-#EXTINF:-1 tvg-id="guangdong" tvg-name="广东卫视标清" tvg-chno="680"
+#EXTINF:-1 tvg-id="" tvg-name="广东卫视标清" tvg-chno="680"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225738/10000100000000060000000000000639_0.smil
-#EXTINF:-1 tvg-id="jilin" tvg-name="吉林卫视标清" tvg-chno="681"
+#EXTINF:-1 tvg-id="" tvg-name="吉林卫视标清" tvg-chno="681"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225741/10000100000000060000000000000640_0.smil
 #EXTINF:-1 tvg-id="" tvg-name="凤凰卫视电影台" tvg-chno="682"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226862/10000100000000060000000002247623_0.smil
@@ -345,11 +345,11 @@ rtsp://192.168.26.20/PLTV/88888914/224/3221226862/100001000000000600000000022476
 rtsp://192.168.26.20/PLTV/88888914/224/3221226867/10000100000000060000000002247622_0.smil
 #EXTINF:-1 tvg-id="" tvg-name="凤凰卫视资讯台" tvg-chno="684"
 rtsp://192.168.26.20/PLTV/88888914/224/3221226858/10000100000000060000000002247621_0.smil
-#EXTINF:-1 tvg-id="cctv17" tvg-name="CCTV-17" tvg-chno="685"
+#EXTINF:-1 tvg-id="" tvg-name="CCTV-17" tvg-chno="685"
 rtsp://192.168.26.20/PLTV/88888914/224/3221227386/138583341.smil
-#EXTINF:-1 tvg-id="cctv11" tvg-name="CCTV-11" tvg-chno="690"
+#EXTINF:-1 tvg-id="" tvg-name="CCTV-11" tvg-chno="690"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225696/10000100000000060000000000000570_0.smil
-#EXTINF:-1 tvg-id="cctv15" tvg-name="CCTV-15标清" tvg-chno="691"
+#EXTINF:-1 tvg-id="" tvg-name="CCTV-15标清" tvg-chno="691"
 rtsp://192.168.26.20/PLTV/88888914/224/3221225657/10000100000000060000000000000504_0.smil
 #EXTINF:-1 tvg-id="" tvg-name="海南卫视" tvg-chno="692"
 rtsp://192.168.26.20/PLTV/88888914/224/3221227341/122547881.smil
