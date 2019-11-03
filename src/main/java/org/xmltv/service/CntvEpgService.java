@@ -50,7 +50,7 @@ public class CntvEpgService {
 
     private static final String CNTV_EPG_API_PATH = "/epg/epginfo";
 
-    private static final Integer SEARCH_DATE_DEFAULT_OFFSET = 7;
+    private static final Integer SEARCH_DATE_DEFAULT_OFFSET = 8;
 
     @Autowired
     private ResourceLoader resourceLoader;
