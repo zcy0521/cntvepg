@@ -140,52 +140,6 @@ public class CntvEpgService {
     }
 
     /**
-     * 获取 CNTV EPG 接口返回
-     * @param channelIdList 查询频道集合
-     * @param offset 查询日期偏移量
-     * @return json
-     */
-    List<CntvEpgChannel> getCntvEpgInfo(List<String> channelIdList, Integer offset) {
-        // 查询频道
-        String channelValue = Joiner.on(",").skipNulls().join(channelIdList);
-
-        // 查询日期
-        offset = null == offset ? SEARCH_DATE_DEFAULT_OFFSET : offset;
-
-        // 请求 cntv 接口
-        ObjectMapper mapper = new ObjectMapper();
-        List<CntvEpgChannel> channelList = Lists.newArrayList();
-        for (int i = 0; i < offset; i++) {
-            DateTime date = new DateTime().plusDays(i);
-            String dateValue = date.toString("yyyyMMdd");
-            String egpInfo = searchEpgInfoFromApi(channelValue, dateValue);
-            if (StringUtils.isEmpty(egpInfo)) {
-                continue;
-            }
-
-            // 解析json
-            try {
-                JsonNode epgNode = mapper.readTree(egpInfo);
-                for (String channelId : channelIdList) {
-                    JsonNode channelNode = epgNode.get(channelId);
-                    CntvEpgChannel channel = mapper.treeToValue(channelNode, CntvEpgChannel.class);
-                    channel.setChannelId(channelId);
-                    channelList.add(channel);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        return channelList;
-    }
-
-    public List<CntvEpgChannel> getCntvEpgInfo() {
-        return getCntvEpgInfo(getCntvChannelList(), SEARCH_DATE_DEFAULT_OFFSET);
-    }
-
-    /**
      * 获取 xmltv
      * @param channelIdList 查询频道集合
      * @param offset 查询日期偏移量

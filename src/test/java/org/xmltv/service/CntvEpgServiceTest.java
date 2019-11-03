@@ -13,7 +13,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.FileCopyUtils;
-import org.xmltv.pojo.CntvEpgChannel;
 import org.xmltv.pojo.CntvXmltv;
 
 import java.io.*;
@@ -47,30 +46,26 @@ public class CntvEpgServiceTest {
     }
 
     @Test
-    public void testGetCntvEpgInfo() {
-        List<String> channelIdList = Lists.newArrayList("cctv1", "cctv2");
-        List<CntvEpgChannel> epgInfo = cntvEpgService.getCntvEpgInfo(channelIdList, 2);
-
-        ObjectMapper mapper = new ObjectMapper();
-        String json = "";
-        try {
-            json = mapper.writeValueAsString(epgInfo);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        System.out.println(json);
-    }
-
-    @Test
     public void testGetCntvXmltv() {
         List<String> channelIdList = Lists.newArrayList("cctv1", "cctv2");
         CntvXmltv xmltv = cntvEpgService.getCntvXmltv(channelIdList, 2);
 
-        XmlMapper mapper = new XmlMapper();
-        mapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
+        // JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = "";
+        try {
+            json = objectMapper.writeValueAsString(xmltv);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        System.out.println(json);
+
+        // XML
+        XmlMapper xmlMapper = new XmlMapper();
+        xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
         String xml = "";
         try {
-            xml = mapper.writeValueAsString(xmltv);
+            xml = xmlMapper.writeValueAsString(xmltv);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
