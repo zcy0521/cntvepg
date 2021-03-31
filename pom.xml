@@ -26,7 +26,7 @@
         <javax-inject.version>1</javax-inject.version>
         <lombok.version>1.18.2</lombok.version>
         <commons-lang3.version>3.9</commons-lang3.version>
-        <guava.version>28.1-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <joda-time.version>2.10.5</joda-time.version>
         <httpclient.version>4.5.10</httpclient.version>
     </properties>
